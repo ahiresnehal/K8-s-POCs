@@ -37,7 +37,7 @@ pipeline {
       steps {
         sh "pwd"
         sh "ls"
-        rm -rf temp_repo
+        sh "rm -rf temp_repo"
         sh 'git clone --branch ${BRANCH_NAME} ${REPO_URL} temp_repo'
       }
     }
