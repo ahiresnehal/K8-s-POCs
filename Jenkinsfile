@@ -2,11 +2,9 @@ pipeline {
     agent any
     environment {
        email_list = 'shivam.singh@gslab.com'
-       GIT_CREDENTIALS = credentials('my-git-creds')
        REPO_URL = 'https://github.com/shivamsingh3238/Clone-k8-s-poc.git'
        BRANCH_NAME = 'master'
        FOLDER_NAME = 'clone-poc'
-       NEW_FOLDER_NAME = 'mynewfolder'
     }
     stages {
         stage('github checkout automatation-poc-repo') {
@@ -42,9 +40,7 @@ pipeline {
                     } else {
                         echo "Folder does not exist. Creating."
                         sh "mkdir ${FOLDER_NAME}"
-                        withCredentials([usernamePassword(credentialsId: GIT_CREDENTIALS, usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                            sh "git clone --branch ${BRANCH_NAME} ${REPO_URL} ${FOLDER_NAME}"
-                        }
+                        sh "git clone --branch ${BRANCH_NAME} ${REPO_URL} ${FOLDER_NAME}"
                     }
                     sh "pwd"
                     sh "mkdir ${NEW_FOLDER_NAME}"
