@@ -35,15 +35,20 @@ pipeline {
         stage('Clone or pull repository') {
             steps {
                 script {
+                    sh "cd .."
                     if (fileExists(FOLDER_NAME)) {
                         echo "Folder already exists. Skipping creation."
                         sh "git -C ${FOLDER_NAME} pull origin ${BRANCH_NAME}"
+                        sh "ls"
+                        sh "pwd"
                     } else {
                         echo "Folder does not exist. Creating."
                         sh "mkdir ${FOLDER_NAME}"
                         sh "git clone --branch ${BRANCH_NAME} ${REPO_URL} ${FOLDER_NAME}"
+                        sh "ls"
+                        sh "pwd"
                     }
-                    sh "pwd"
+                    
                     sh "mkdir ${NEW_FOLDER_NAME}"
                     sh "ls -ltr"
                     
