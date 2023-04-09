@@ -3,7 +3,7 @@ pipeline {
     environment {
        email_list = 'shivam.singh@gslab.com'
        REPO_URL = 'https://github.com/shivamsingh3238/Clone-k8-s-poc.git'
-       BRANCH_NAME = 'master'
+       BRANCH_NAME = 'main'
        FOLDER_NAME = 'clone-poc'
        NEW_FOLDER_NAME = 'mynewfolder'
     }
