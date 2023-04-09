@@ -35,6 +35,8 @@ pipeline {
         // }
       stage('Clone target repository') {
       steps {
+        sh "pwd"
+        sh "ls"
         sh 'git clone --branch ${BRANCH_NAME} ${REPO_URL} temp_repo'
       }
     }
