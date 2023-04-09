@@ -1,8 +1,13 @@
 pipeline {
     agent any
     environment {
-       email_list = 'shivam.singh@gslab.com '
-   }
+       email_list = 'shivam.singh@gslab.com'
+       GIT_CREDENTIALS = credentials('my-git-creds')
+       REPO_URL = 'https://github.com/shivamsingh3238/Clone-k8-s-poc.git'
+       BRANCH_NAME = 'master'
+       FOLDER_NAME = 'clone-poc'
+       NEW_FOLDER_NAME = 'mynewfolder'
+    }
     stages {
         stage('github checkout automatation-poc-repo') {
             steps {
@@ -28,5 +33,25 @@ pipeline {
               }
             }
         }
-}
+        stage('Clone or pull repository') {
+            steps {
+                script {
+                    if (fileExists(FOLDER_NAME)) {
+                        echo "Folder already exists. Skipping creation."
+                        sh "git -C ${FOLDER_NAME} pull origin ${BRANCH_NAME}"
+                    } else {
+                        echo "Folder does not exist. Creating."
+                        sh "mkdir ${FOLDER_NAME}"
+                        withCredentials([usernamePassword(credentialsId: GIT_CREDENTIALS, usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                            sh "git clone --branch ${BRANCH_NAME} ${REPO_URL} ${FOLDER_NAME}"
+                        }
+                    }
+                    sh "pwd"
+                    sh "mkdir ${NEW_FOLDER_NAME}"
+                    sh "ls -ltr"
+                    
+                }
+            }
+        }
+    }
 }
