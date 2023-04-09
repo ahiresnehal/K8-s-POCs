@@ -13,7 +13,8 @@ pipeline {
                 git 'https://github.com/shivamsingh3238/K8-s-POCs.git'
             }
         }
-    }
+    
+
         // stage('Code Quality Check via SonarQubes'){
         //     steps {
         //        script {
@@ -56,3 +57,4 @@ pipeline {
     }     
 
   }
+}
