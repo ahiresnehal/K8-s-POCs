@@ -41,7 +41,7 @@ pipeline {
     
     stage('Copy workspace contents to temporary directory') {
       steps {
-        sh 'rsync -av --exclude=".git" . temp_repo'
+        sh "rsync -av --exclude='.git' . temp_repo"
       }
     }
     
