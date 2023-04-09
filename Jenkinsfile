@@ -34,8 +34,10 @@ pipeline {
         // }
         stage('Clone or pull repository') {
             steps {
+                dir('/var/jenkins_home/workspace')
                 script {
-                    sh "cd /var/jenkins_home/workspace"
+                    sh 'pwd'
+                    sh "ls"
                     if (fileExists(FOLDER_NAME)) {
                         echo "Folder already exists. Skipping creation."
                         sh "git -C ${FOLDER_NAME} pull origin ${BRANCH_NAME}"
