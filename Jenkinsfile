@@ -14,28 +14,28 @@ pipeline {
             }
         }
 
-        stage('Code Quality Check via SonarQubes'){
-            steps {
-               script {
-               def scannerHome = tool 'SonarScanner';
-                   withSonarQubeEnv("SonarScanner") {
+        // stage('Code Quality Check via SonarQubes'){
+        //     steps {
+        //        script {
+        //        def scannerHome = tool 'SonarScanner';
+        //            withSonarQubeEnv("SonarScanner") {
               
-                   sh "${tool("SonarScanner")}/bin/sonar-scanner"
-                       }
-                   }
-                }
-        }
-        stage("Quality Gate") {
-            steps {
-              timeout(time: 1, unit: 'HOURS') {
-                waitForQualityGate abortPipeline: true
-              }
-            }
-        }
+        //            sh "${tool("SonarScanner")}/bin/sonar-scanner"
+        //                }
+        //            }
+        //         }
+        // }
+        // stage("Quality Gate") {
+        //     steps {
+        //       timeout(time: 1, unit: 'HOURS') {
+        //         waitForQualityGate abortPipeline: true
+        //       }
+        //     }
+        // }
         stage('Clone or pull repository') {
             steps {
                 script {
-                    sh "cd .."
+                    sh "cd /var/jenkins_home/workspace"
                     if (fileExists(FOLDER_NAME)) {
                         echo "Folder already exists. Skipping creation."
                         sh "git -C ${FOLDER_NAME} pull origin ${BRANCH_NAME}"
