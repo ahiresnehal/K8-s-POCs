@@ -13,7 +13,7 @@ pipeline {
                 git 'https://github.com/shivamsingh3238/K8-s-POCs.git'
             }
         }
-
+    }
         // stage('Code Quality Check via SonarQubes'){
         //     steps {
         //        script {
@@ -32,27 +32,30 @@ pipeline {
         //       }
         //     }
         // }
-        stage('Clone or pull repository') {
-            steps {
-                dir('/var/jenkins_home/workspace'){
-                    if (fileExists(FOLDER_NAME)) {
-                        echo "Folder already exists. Skipping creation."
-                        sh "git -C ${FOLDER_NAME} pull origin ${BRANCH_NAME}"
-                        sh "ls"
-                        sh "pwd"
-                    } else {
-                        echo "Folder does not exist. Creating."
-                        sh "mkdir ${FOLDER_NAME}"
-                        sh "git clone --branch ${BRANCH_NAME} ${REPO_URL} ${FOLDER_NAME}"
-                        sh "ls"
-                        sh "pwd"
-                    }
-                    
-                    sh "mkdir ${NEW_FOLDER_NAME}"
-                    sh "ls -ltr"
-                    
-                }
-            }
-         }
+      stage('Clone target repository') {
+      steps {
+        sh 'git clone <target_repo_url> temp_repo'
+      }
+    }
+    
+    stage('Copy workspace contents to temporary directory') {
+      steps {
+        sh 'rsync -av --exclude=".git" . temp_repo'
+      }
+    }
+    
+    stage('Add and commit changes') {
+      steps {
+        dir('temp_repo') {
+          sh 'git add .'
+          sh 'git commit -m "Jenkins to GitHub"'
+          sh "git  push origin ${BRANCH_NAME}"
+
+        }
+      }
+    }     
+
+
+
     }
 }
