@@ -34,8 +34,7 @@ pipeline {
         // }
         stage('Clone or pull repository') {
             steps {
-                dir('/var/jenkins_home/workspace')
-                script {
+                dir('/var/jenkins_home/workspace'){
                     sh 'pwd'
                     sh "ls"
                     if (fileExists(FOLDER_NAME)) {
