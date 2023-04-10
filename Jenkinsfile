@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-       email_list = 'shivam.singh@gslab.com '
+       email_list = 'shivam.singh@gslab.com'
    }
     stages {
         stage('github checkout automatation-poc-repo') {
