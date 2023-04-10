@@ -2,10 +2,6 @@ pipeline {
     agent any
     environment {
        email_list = 'shivam.singh@gslab.com'
-       REPO_URL = 'https://github.com/shivamsingh3238/Clone-k8-s-poc.git'
-       BRANCH_NAME = 'main'
-       FOLDER_NAME = 'clone-poc'
-       NEW_FOLDER_NAME = 'mynewfolder'
     }
     stages {
         stage('github checkout automatation-poc-repo') {
