@@ -13,51 +13,23 @@ pipeline {
                 git 'https://github.com/shivamsingh3238/K8-s-POCs.git'
             }
         }
-    
-
-        // stage('Code Quality Check via SonarQubes'){
-        //     steps {
-        //        script {
-        //        def scannerHome = tool 'SonarScanner';
-        //            withSonarQubeEnv("SonarScanner") {
+        stage('Code Quality Check via SonarQubes'){
+            steps {
+               script {
+               def scannerHome = tool 'SonarScanner';
+                   withSonarQubeEnv("SonarScanner") {
               
-        //            sh "${tool("SonarScanner")}/bin/sonar-scanner"
-        //                }
-        //            }
-        //         }
-        // }
-        // stage("Quality Gate") {
-        //     steps {
-        //       timeout(time: 1, unit: 'HOURS') {
-        //         waitForQualityGate abortPipeline: true
-        //       }
-        //     }
-        // }
-      stage('Clone target repository') {
-      steps {
-        sh "pwd"
-        sh "ls"
-        sh "rm -rf temp_repo"
-        sh 'git clone --branch ${BRANCH_NAME} ${REPO_URL} temp_repo'
-      }
-    }
-    
-    stage('Copy workspace contents to temporary directory') {
-      steps {
-        sh "rsync -av --exclude='.git' . temp_repo"
-      }
-    }
-    
-    stage('Add and commit changes') {
-      steps {
-        dir('temp_repo') {
-          sh 'git add .'
-          sh 'git commit -m "Jenkins to GitHub"'
-          sh "git  push origin ${BRANCH_NAME}"
-
+                   sh "${tool("SonarScanner")}/bin/sonar-scanner"
+                       }
+                   }
+                }
         }
-      }
-    }     
-
+        stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+        }
   }
 }
