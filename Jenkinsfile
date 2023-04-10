@@ -4,9 +4,12 @@ pipeline {
        email_list = 'shivam.singh@gslab.com'
    }
     stages {
-        stage('github checkout automatation-poc-repo') {
+        stage('Build') {
             steps {
+                
                 git 'https://github.com/shivamsingh3238/K8-s-POCs.git'
+
+                 }
             }
         }
 
