@@ -11,8 +11,6 @@ pipeline {
 
                  }
             }
-        }
-
         stage('Code Quality Check via SonarQubes'){
             steps {
                script {
